@@ -1,0 +1,32 @@
+import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
+import { AppRoutingModule } from './app-routing-module';
+import { App } from './app';
+import { Iproducts } from './interfaces/iproducts';
+import { Product } from './Services/product';
+@NgModule({
+  declarations: [
+    App,
+   
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule
+  ],
+  providers: [
+    provideBrowserGlobalErrorListeners()
+  ],
+  bootstrap: [App]
+})
+export class AppModule {
+  constructor(private product:Product){}
+
+products:Iproducts[] = []
+
+ngOnInit() {
+  this.product.getProducts().subscribe((result: Iproducts[]) => {
+    this.products = result;
+  });
+}}
